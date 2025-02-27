@@ -1,12 +1,15 @@
 // components/SectionTable.jsx
 import React, { useState } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaPlusCircle } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaPlusCircle,FaBook  } from 'react-icons/fa';
 import CreateModal from './CreateModal';
 import EditModal from './EditModal';
 import AddWordsModal from './AddWordsModal';
-
+import ContentModal from './ContentModal'; 
+import ExerciseModal from './ExerciseModal';
+import TestModal from './TestModal';
 const SectionTable = ({
   title,
+  type,
   items,
   onAdd,         // Function to add a new item
   onEdit,        // Function to update an item
@@ -25,6 +28,7 @@ const SectionTable = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddWordsModalOpen, setIsAddWordsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // ใช้ตัวเดียวกันสำหรับ content/exercise/test
 
   // Handlers for Create Modal
   const handleOpenCreateModal = () => setIsCreateModalOpen(true);
@@ -51,6 +55,13 @@ const SectionTable = ({
     setIsAddWordsModalOpen(true);
   };
   const handleCloseAddWordsModal = () => setIsAddWordsModalOpen(false);
+
+  // เปิด / ปิด Modal ตามประเภท
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <section className="mb-12">
@@ -99,6 +110,15 @@ const SectionTable = ({
                     >
                       <FaPlusCircle size={20} />
                     </button>
+                     {/* แสดงปุ่มเฉพาะประเภทที่เลือก */}
+                   
+                      <button
+                        onClick={() => handleOpenModal(item)}
+                        className="text-yellow-500 hover:text-yellow-600 transition duration-200"
+                      >
+                        <FaBook size={20} />
+                      </button>
+                    
                     <button
                       onClick={() => handleOpenEditModal(item)}
                       className="text-green-500 hover:text-green-600 transition duration-200"
@@ -152,6 +172,16 @@ const SectionTable = ({
         contentId={selectedItem ? selectedItem.id : null}  // Pass the selected item's id as contentId
         lessonId={lessonId}
       />
+      
+      {isModalOpen && selectedItem && type === 'content' && (
+        <ContentModal contentId={selectedItem.id} onClose={handleCloseModal} />
+      )}
+      {isModalOpen && selectedItem && type === 'exercise' && (
+        <ExerciseModal exerciseId={selectedItem.id} onClose={handleCloseModal} />
+      )}
+      {isModalOpen && selectedItem && type === 'test' && (
+        <TestModal testId={selectedItem.id} onClose={handleCloseModal} />
+      )}
     </section>
   );
   

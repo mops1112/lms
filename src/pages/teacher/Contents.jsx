@@ -286,6 +286,7 @@ function Contents() {
         {/* <h1 className="text-4xl font-bold text-blue-900 mb-8">Course Contents</h1> */}
         <SectionTable
           title="แบบเรียน"
+          type="content"
           items={contents}
           onAdd={handleAddContent}
           onEdit={handleEditContent}
@@ -306,6 +307,7 @@ function Contents() {
 
         <SectionTable
           title="แบบฝึกหัด"
+          type="exercise"
           items={exercises}
           onAdd={handleAddExercise}
           onEdit={handleEditExercise}
@@ -325,6 +327,7 @@ function Contents() {
 
         <SectionTable
           title="แบบทดสอบ"
+          type="test"
           items={tests}
           onAdd={handleAddTest}
           onEdit={handleEditTest}
