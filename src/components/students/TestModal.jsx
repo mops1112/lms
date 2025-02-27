@@ -26,7 +26,7 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
         // เริ่ม delay 2 วินาทีก่อนเริ่มจับเสียง
         setTimeout(() => {
           setIsStarting(false);
-        }, 2000);
+        }, 1000);
       } catch (err) {
         console.error(err);
         setError('Error fetching test words');
