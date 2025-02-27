@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; // Ensure you install this package: npm install jwt-decode
 import { Menu, X } from "lucide-react"; 
+import ProfileEditModal from '../components/ProfileEditModal'; // นำเข้า Modal
 
 const StudentLayout = ({ children }) => {
   const [user, setUser] = useState({ username: 'Guest', role: 'Teacher' });
   const [menuOpen, setMenuOpen] = useState(false); // State สำหรับเปิด-ปิดเมนู
+  const [isModalOpen, setIsModalOpen] = useState(false); // เปิดปิดโมดอล
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const StudentLayout = ({ children }) => {
         } else {
           // Token is still valid, set user details
           setUser({
+            id: decoded.user.id,
             name: decoded.user.name,
             role: decoded.user.role,
             email: decoded.user.email
@@ -42,7 +45,9 @@ const StudentLayout = ({ children }) => {
     localStorage.removeItem('x-auth-token');
     navigate('/');
   };
-
+  const handleSaveProfile = (newName) => {
+    setUser((prev) => ({ ...prev, name: newName }));
+  };
   return (
       <div className="flex flex-col lg:flex-row min-h-screen bg-blue-50">
         {/* Mobile Menu Button */}
@@ -67,7 +72,9 @@ const StudentLayout = ({ children }) => {
               className="h-20 w-20 rounded-full mb-4 border-2 border-blue-700"
             />
             <h2 className="text-xl font-bold">{user.email}</h2>
-            <h3 className="text-xl font-bold">{user.name}</h3>
+            <button onClick={() => setIsModalOpen(true)} className="text-xl font-bold hover:underline">
+            {user.name}
+          </button>
             <p className="text-blue-300">{user.role}</p>
           </div>
   
@@ -98,6 +105,9 @@ const StudentLayout = ({ children }) => {
   
         {/* Main Content */}
         <main className="flex-1 lg:ml-64">{children}</main>
+        
+      {/* Profile Edit Modal */}
+      <ProfileEditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleSaveProfile} user={user} />
       </div>
     );
   };

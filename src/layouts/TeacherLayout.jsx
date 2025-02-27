@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Install using: npm install jwt-decode
-import { Menu } from 'lucide-react'; // Install using: npm install lucide-react
+import { jwtDecode } from 'jwt-decode';
+import { Menu } from 'lucide-react';
+import ProfileEditModal from '../components/ProfileEditModal'; // นำเข้า Modal
 
 const TeacherLayout = ({ children }) => {
-  const [user, setUser] = useState({ username: 'Guest', role: 'Teacher' });
-  const [menuOpen, setMenuOpen] = useState(false); // State สำหรับเปิด-ปิดเมนู
+  const [user, setUser] = useState({ name: 'Guest', role: 'Teacher', email: '' });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // เปิดปิดโมดอล
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('x-auth-token');
-
     if (token) {
       try {
         const decoded = jwtDecode(token);
         const currentTime = Math.floor(Date.now() / 1000);
-
         if (decoded.exp < currentTime) {
           console.warn('Token expired. Logging out...');
           localStorage.removeItem('x-auth-token');
           navigate('/login');
         } else {
           setUser({
+            id: decoded.user.id,
             name: decoded.user.name,
             role: decoded.user.role,
             email: decoded.user.email,
@@ -40,6 +41,10 @@ const TeacherLayout = ({ children }) => {
   const handleLogout = () => {
     localStorage.removeItem('x-auth-token');
     navigate('/');
+  };
+
+  const handleSaveProfile = (newName) => {
+    setUser((prev) => ({ ...prev, name: newName }));
   };
 
   return (
@@ -66,7 +71,9 @@ const TeacherLayout = ({ children }) => {
             className="h-20 w-20 rounded-full mb-4 border-2 border-blue-700"
           />
           <h2 className="text-xl font-bold">{user.email}</h2>
-          <h3 className="text-xl font-bold">{user.name}</h3>
+          <button onClick={() => setIsModalOpen(true)} className="text-xl font-bold hover:underline">
+            {user.name}
+          </button>
           <p className="text-blue-300">{user.role}</p>
         </div>
 
@@ -97,6 +104,10 @@ const TeacherLayout = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">{children}</main>
+
+      
+      {/* Profile Edit Modal */}
+      <ProfileEditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleSaveProfile} user={user} />
     </div>
   );
 };

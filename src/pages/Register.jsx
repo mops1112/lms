@@ -34,11 +34,11 @@ function Register() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50">
-      <h1 className="text-4xl font-bold text-blue-900 mt-8">Register</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 px-4">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900 mt-8">Register</h1>
       <form
         onSubmit={handleSubmit}
-        className="mt-8 space-y-6 w-full max-w-md bg-white p-8 rounded-lg shadow-lg"
+        className="mt-6 space-y-6 w-full max-w-sm sm:max-w-md md:max-w-lg bg-white p-6 sm:p-8 rounded-lg shadow-lg"
       >
         <div>
           <label className="block text-sm font-medium text-blue-900">Name</label>
