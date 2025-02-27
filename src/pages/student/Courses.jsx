@@ -46,7 +46,7 @@ function Courses() {
 
   return (
     <StudentLayout>
-      <h1 className="text-4xl font-bold text-center text-white mb-8">รายวิชาทั้งหมด</h1>
+      <h1 className="text-4xl font-bold text-center mb-8">รายวิชาทั้งหมด</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {courses.map((course) => (
           <div key={course.id} className="bg-white rounded-lg overflow-hidden shadow-lg">

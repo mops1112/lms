@@ -39,7 +39,7 @@ const TeacherLayout = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('x-auth-token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (

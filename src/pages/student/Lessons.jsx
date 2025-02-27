@@ -36,27 +36,28 @@ const Lessons = () => {
 
   return (
     <StudentLayout>
-      <h1 className="text-4xl font-bold text-center mb-8">บทเรียน</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow-lg">
+      <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">บทเรียน</h1>
+      
+      {/* Responsive Table Wrapper */}
+      <div className="overflow-x-auto w-full max-w-4xl mx-auto">
+        <table className="min-w-full bg-white rounded-lg shadow-lg text-sm md:text-base">
           <thead>
-            <tr>
-              <th className="px-6 py-3 border-b text-xl text-gray-800 text-center">ลำดับ</th>
-              <th className="px-6 py-3 border-b text-xl text-gray-800 text-center">ชื่อบทเรียน</th>
-              <th className="px-6 py-3 border-b text-xl text-gray-800 text-center">การกระทำ</th>
+            <tr className="bg-blue-100">
+              <th className="px-4 md:px-6 py-3 border-b text-gray-800 text-center">ลำดับ</th>
+              <th className="px-4 md:px-6 py-3 border-b text-gray-800 text-center">ชื่อบทเรียน</th>
+              <th className="px-4 md:px-6 py-3 border-b text-gray-800 text-center">การกระทำ</th>
             </tr>
           </thead>
           <tbody>
             {lessons.length > 0 ? (
               lessons.map((lesson, index) => (
-                <tr key={lesson.id}>
-                  <td className="px-6 py-4 border-b text-center">{index + 1}</td>
-                  <td className="px-6 py-4 border-b">{lesson.title}</td>
-                  <td className="px-6 py-4 border-b text-center space-x-2">
-                   
+                <tr key={lesson.id} className="hover:bg-blue-50 transition">
+                  <td className="px-4 md:px-6 py-4 border-b text-center">{index + 1}</td>
+                  <td className="px-4 md:px-6 py-4 border-b">{lesson.title}</td>
+                  <td className="px-4 md:px-6 py-4 border-b text-center">
                     <Link
                       to={`/student/courses/${courseId}/lessons/${lesson.id}/contents`}
-                       className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition text-xs md:text-sm"
                     >
                       เข้าสู่บทเรียน
                     </Link>
@@ -65,12 +66,14 @@ const Lessons = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="3" className="text-center py-4">ไม่พบบทเรียน</td>
+                <td colSpan="3" className="text-center py-4 text-gray-600">ไม่พบบทเรียน</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+  
+      {/* Modal */}
       {selectedLessonId && (
         <LessonContentModal 
           courseId={courseId} 
@@ -80,6 +83,7 @@ const Lessons = () => {
       )}
     </StudentLayout>
   );
+  
 };
 
 export default Lessons;

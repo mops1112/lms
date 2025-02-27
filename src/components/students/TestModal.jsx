@@ -151,21 +151,25 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative">
-        <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-3xl p-6 relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition duration-200"
+        >
           &times;
         </button>
-        {/* <h1 className="text-3xl font-bold mb-4">{test.title}</h1> */}
-        <h1 className="text-3xl font-bold mb-4">แบบทดสอบ</h1>
-
+  
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center">แบบทดสอบ</h1>
+  
         <div className="mb-6">
-          <p className="mb-4">ให้อ่านคำตามไฮไลค์</p>
-          <div className="flex flex-wrap gap-2">
+          <p className="mb-4 text-center">ให้อ่านคำตามไฮไลท์</p>
+          <div className="flex flex-wrap gap-2 justify-center">
             {words.map((wordObj, index) => (
               <span
                 key={index}
-                className={`px-3 py-1 border rounded-lg transition ${
+                className={`px-3 py-1 border rounded-lg transition text-xs sm:text-sm md:text-base ${
                   index === currentIndex ? 'bg-yellow-300' : 'bg-gray-200'
                 }`}
               >
@@ -180,24 +184,28 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
             ))}
           </div>
         </div>
-
+  
         {Object.keys(results).length >= words.length && (
-          <div className="mt-4 border-t pt-4">
+          <div className="mt-4 border-t pt-4 text-center">
             <p className="text-xl font-bold">สรุปคะแนน</p>
             <p>
               คำที่อ่านถูกต้อง: {Object.values(results).filter((r) => r.isCorrect).length} / {words.length}
             </p>
           </div>
         )}
-
-        <div className="flex justify-end mt-6">
-          <button onClick={onClose} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
+  
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={onClose}
+            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded transition duration-200"
+          >
             Close
           </button>
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default TestModal;

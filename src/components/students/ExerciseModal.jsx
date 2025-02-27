@@ -129,22 +129,23 @@ const ExerciseModal = ({ courseId, lessonId, exerciseId, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative">
-        <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-3xl p-6 relative">
+        {/* Close Button */}
+        <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition">
           &times;
         </button>
-        <h1 className="text-3xl font-bold mb-4">แบบฝึกหัด</h1>
-        {/* <h1 className="text-3xl font-bold mb-4">{exercise.title}</h1> */}
-
+  
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center">แบบฝึกหัด</h1>
+  
         <div className="mb-6">
-          <p className="mb-4">เลือกคำและอ่านออกเสียง</p>
-          <div className="flex flex-wrap gap-2">
+          <p className="mb-4 text-center">เลือกคำและอ่านออกเสียง</p>
+          <div className="flex flex-wrap gap-2 justify-center">
             {words.map((word, index) => (
               <button
                 key={index}
                 onClick={() => startRecognition(word)}
-                className={`px-3 py-1 border rounded-lg transition ${
+                className={`px-3 py-1 border rounded-lg transition text-xs sm:text-sm md:text-base ${
                   selectedWord === word ? 'bg-yellow-300' : 'bg-blue-500 text-white hover:bg-blue-600'
                 }`}
               >
@@ -159,27 +160,34 @@ const ExerciseModal = ({ courseId, lessonId, exerciseId, onClose }) => {
             ))}
           </div>
         </div>
-
+  
         {Object.keys(results).length >= words.length && (
           <div className="mt-4 border-t pt-4">
-            <p className="text-xl font-bold">Summary:</p>
-            <p>
+            <p className="text-xl font-bold text-center">Summary:</p>
+            <p className="text-center">
               Correct: {correctCount} / {total}
             </p>
           </div>
         )}
-
-        <div className="flex justify-between mt-6">
-          <button onClick={handleRestartExercise} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+  
+        <div className="flex flex-col sm:flex-row justify-between mt-6 gap-2">
+          <button
+            onClick={handleRestartExercise}
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded w-full sm:w-auto"
+          >
             เริ่มทำแบบฝึกใหม่
           </button>
-          <button onClick={onClose} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
+          <button
+            onClick={onClose}
+            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded w-full sm:w-auto"
+          >
             Close
           </button>
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default ExerciseModal;

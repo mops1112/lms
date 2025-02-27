@@ -39,7 +39,7 @@ const TeacherLayout = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('x-auth-token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -76,9 +76,9 @@ const TeacherLayout = ({ children }) => {
             <li className="mb-4">
               <Link
                 to="/teacher/courses"
-                className="block px-4 py-2 rounded hover:bg-blue-800 transition-colors duration-200"
+                className="block px-4 py-2 rounded bg-blue-700 transition-colors duration-200"
               >
-                รายวิชา
+                หน้าหลัก
               </Link>
             </li>
           </ul>

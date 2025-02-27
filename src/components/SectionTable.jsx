@@ -65,57 +65,60 @@ const SectionTable = ({
           <span>{addButtonLabel}</span>
         </button>
       </div>
-      {/* Data Table */}
-      <table className="min-w-full bg-white rounded-lg shadow">
-        <thead className="bg-blue-800 text-white">
-          <tr>
-            {columns.map((col, index) => (
-              <th key={index} className="py-2 px-4 border-r">
-                {col}
-              </th>
-            ))}
-            <th className="py-2 px-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.length === 0 ? (
+  
+      {/* Data Table - Responsive */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white rounded-lg shadow text-sm md:text-base">
+          <thead className="bg-blue-800 text-white">
             <tr>
-              <td colSpan={columns.length + 1} className="text-center py-4">
-                No {title.toLowerCase()} available.
-              </td>
+              {columns.map((col, index) => (
+                <th key={index} className="py-2 px-4 border-r">
+                  {col}
+                </th>
+              ))}
+              <th className="py-2 px-4">Actions</th>
             </tr>
-          ) : (
-            items.map((item) => (
-              <tr key={item.id} className="hover:bg-blue-50">
-                <td className="py-2 px-4 border-r">{item.title}</td>
-                <td className="py-2 px-4 border-r">{item.description}</td>
-                <td className="py-2 px-4 flex justify-end space-x-2">
-                  {/* Always show the "Add Words" button */}
-                  <button
-                    onClick={() => handleOpenAddWordsModal(item)}
-                    className="text-blue-500 hover:text-blue-600 transition duration-200"
-                  >
-                    <FaPlusCircle size={20} />
-                  </button>
-                  <button
-                    onClick={() => handleOpenEditModal(item)}
-                    className="text-green-500 hover:text-green-600 transition duration-200"
-                  >
-                    <FaEdit size={20} />
-                  </button>
-                  
-                  <button
-                    onClick={() => onDelete(item.id)}
-                    className="text-red-500 hover:text-red-600 transition duration-200"
-                  >
-                    <FaTrash size={20} />
-                  </button>
+          </thead>
+          <tbody>
+            {items.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1} className="text-center py-4">
+                  No {title.toLowerCase()} available.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              items.map((item) => (
+                <tr key={item.id} className="hover:bg-blue-50">
+                  <td className="py-2 px-4 border-r">{item.title}</td>
+                  <td className="py-2 px-4 border-r">{item.description}</td>
+                  <td className="py-2 px-4 flex justify-end space-x-2">
+                    {/* Always show the "Add Words" button */}
+                    <button
+                      onClick={() => handleOpenAddWordsModal(item)}
+                      className="text-blue-500 hover:text-blue-600 transition duration-200"
+                    >
+                      <FaPlusCircle size={20} />
+                    </button>
+                    <button
+                      onClick={() => handleOpenEditModal(item)}
+                      className="text-green-500 hover:text-green-600 transition duration-200"
+                    >
+                      <FaEdit size={20} />
+                    </button>
+                    <button
+                      onClick={() => onDelete(item.id)}
+                      className="text-red-500 hover:text-red-600 transition duration-200"
+                    >
+                      <FaTrash size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+  
       {/* Create Modal */}
       <CreateModal
         isOpen={isCreateModalOpen}
@@ -125,6 +128,7 @@ const SectionTable = ({
         placeholderTitle={placeholderTitle}
         placeholderDescription={placeholderDescription}
       />
+      
       {/* Edit Modal */}
       <EditModal
         item={selectedItem}
@@ -133,6 +137,7 @@ const SectionTable = ({
         onSave={handleEdit}
         modalTitle={editModalTitle}
       />
+      
       {/* Add Words Modal */}
       <AddWordsModal
         isOpen={isAddWordsModalOpen}
@@ -149,6 +154,7 @@ const SectionTable = ({
       />
     </section>
   );
+  
 };
 
 export default SectionTable;

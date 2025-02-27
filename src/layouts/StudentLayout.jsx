@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; // Ensure you install this package: npm install jwt-decode
+import { Menu, X } from "lucide-react"; 
 
 const StudentLayout = ({ children }) => {
   const [user, setUser] = useState({ username: 'Guest', role: 'Teacher' });
+  const [menuOpen, setMenuOpen] = useState(false); // State สำหรับเปิด-ปิดเมนู
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,52 +40,66 @@ const StudentLayout = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('x-auth-token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
-    <div className="flex min-h-screen bg-blue-50">
-      <aside className="w-64 bg-blue-900 text-white flex flex-col">
-        {/* Profile section */}
-        <div className="p-6 border-b border-blue-800 flex flex-col items-center">
-          <img
-            src="https://static.vecteezy.com/system/resources/previews/005/129/844/large_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg"
-            alt="Profile"
-            className="h-20 w-20 rounded-full mb-4 border-2 border-blue-700"
-          />
-          <h2 className="text-xl font-bold">{user.email}</h2>
-          <h3 className="text-xl font-bold">{user.name}</h3>
-          <p className="text-blue-300">{user.role}</p>
-        </div>
-
-        {/* Navigation menu */}
-        <nav className="flex-1 p-6">
-          <ul>
-            <li className="mb-4">
-              <Link
-                to="/student/courses"
-                className="block px-4 py-2 rounded hover:bg-blue-800 transition-colors duration-200"
-              >
-                รายวิชา
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Logout button */}
-        <div className="p-6 border-t border-blue-800">
-          <button
-            onClick={handleLogout}
-            className="w-full text-center px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors duration-200"
-          >
-            ออกจากระบบ
+      <div className="flex flex-col lg:flex-row min-h-screen bg-blue-50">
+        {/* Mobile Menu Button */}
+        <div className="lg:hidden p-4 flex justify-between items-center bg-blue-900 text-white">
+          <h2 className="text-lg font-bold">{user.name}</h2>
+          <button onClick={() => setMenuOpen(!menuOpen)} className="focus:outline-none">
+            <Menu size={28} />
           </button>
         </div>
-      </aside>
-
-      <main className="flex-1 p-8">{children}</main>
-    </div>
-  );
-};
+  
+        {/* Sidebar */}
+        <aside
+          className={`fixed inset-y-0 left-0 z-50 transform lg:relative lg:translate-x-0 lg:flex w-64 bg-blue-900 text-white flex-col transition-transform duration-300 ${
+            menuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          {/* Profile Section */}
+          <div className="p-6 border-b border-blue-800 flex flex-col items-center">
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/005/129/844/large_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg"
+              alt="Profile"
+              className="h-20 w-20 rounded-full mb-4 border-2 border-blue-700"
+            />
+            <h2 className="text-xl font-bold">{user.email}</h2>
+            <h3 className="text-xl font-bold">{user.name}</h3>
+            <p className="text-blue-300">{user.role}</p>
+          </div>
+  
+          {/* Navigation Menu */}
+          <nav className="flex-1 p-6">
+            <ul>
+              <li className="mb-4">
+                <Link
+                  to="/teacher/courses"
+                  className="block px-4 py-2 rounded bg-blue-700 transition-colors duration-200"
+                >
+                  หน้าหลัก
+                </Link>
+              </li>
+            </ul>
+          </nav>
+  
+          {/* Logout Button */}
+          <div className="p-6 border-t border-blue-800">
+            <button
+              onClick={handleLogout}
+              className="w-full text-center px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors duration-200"
+            >
+              ออกจากระบบ
+            </button>
+          </div>
+        </aside>
+  
+        {/* Main Content */}
+        <main className="flex-1 p-8 lg:ml-64">{children}</main>
+      </div>
+    );
+  };
 
 export default StudentLayout;

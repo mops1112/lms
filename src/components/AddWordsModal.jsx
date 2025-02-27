@@ -137,9 +137,9 @@ const AddWordsModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-      <div className="bg-blue-900 p-8 rounded-lg shadow-xl w-1/2">
-        <h2 className="text-3xl font-bold text-white mb-6">{modalTitle}</h2>
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 px-4">
+      <div className="bg-blue-900 p-6 rounded-lg shadow-xl w-full max-w-2xl">
+        <h2 className="text-2xl font-bold text-white mb-4 text-center">{modalTitle}</h2>
         
         {/* Section 1: Display all available words */}
         <div className="mb-4">
@@ -156,10 +156,12 @@ const AddWordsModal = ({
             ))}
           </div>
         </div>
-
+  
         {/* Section 2: Creatable select for current words */}
         <div className="mb-4">
-          <h3 className="text-white font-semibold mb-2">คำที่เลือกใช้ใน{entityType === "content" ? "แบบเรียน" : entityType === "exercise" ? "แบบฝึกหัด" : "แบบทดสอบ"}</h3>
+          <h3 className="text-white font-semibold mb-2">
+            คำที่เลือกใช้ใน{entityType === "content" ? "แบบเรียน" : entityType === "exercise" ? "แบบฝึกหัด" : "แบบทดสอบ"}
+          </h3>
           <CreatableSelect
             isMulti
             onChange={handleChange}
@@ -186,6 +188,7 @@ const AddWordsModal = ({
       </div>
     </div>
   );
+  
 };
 
 export default AddWordsModal;

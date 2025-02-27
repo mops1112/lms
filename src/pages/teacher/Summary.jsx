@@ -114,51 +114,53 @@ const Summary = () => {
 
   return (
     <TeacherLayout>
-      <div className="container mx-auto px-6 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8 text-blue-900">สรุปแบบทดสอบ</h1>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-blue-900">สรุปแบบทดสอบ</h1>
 
-        {/* Student Summary Table */}
-        <table className="min-w-full bg-white rounded-lg shadow mb-12">
-          <thead className="bg-blue-700 text-white">
-            <tr>
-              <th className="py-2 px-4 border-r">ชื่อ</th>
-              <th className="py-2 px-4 border-r">ชื่อบทเรียน</th>
-              <th className="py-2 px-4 border-r">คะแนนแบทดสอบ</th>
-              <th className="py-2 px-4">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student) =>
-              Object.keys(testResults[student.id] || {}).map((testId, index) => {
-                const result = testResults[student.id][testId];
-                return (
-                  <tr key={`${student.id}-${testId}`} className="hover:bg-blue-100 transition">
-                    {index === 0 && (
-                      <td
-                        rowSpan={Object.keys(testResults[student.id]).length}
-                        className="py-2 px-4 border-r text-center font-semibold"
-                      >
-                        {student.name}
+        {/* Student Summary Table - Responsive */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white rounded-lg shadow mb-8 text-sm md:text-base">
+            <thead className="bg-blue-700 text-white">
+              <tr>
+                <th className="py-2 px-4 border-r">ชื่อ</th>
+                <th className="py-2 px-4 border-r">ชื่อบทเรียน</th>
+                <th className="py-2 px-4 border-r">คะแนนแบทดสอบ</th>
+                <th className="py-2 px-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {students.map((student) =>
+                Object.keys(testResults[student.id] || {}).map((testId, index) => {
+                  const result = testResults[student.id][testId];
+                  return (
+                    <tr key={`${student.id}-${testId}`} className="hover:bg-blue-100 transition">
+                      {index === 0 && (
+                        <td
+                          rowSpan={Object.keys(testResults[student.id]).length}
+                          className="py-2 px-4 border-r text-center font-semibold"
+                        >
+                          {student.name}
+                        </td>
+                      )}
+                      <td className="py-2 px-4 border-r">{result.lessonTitle}</td>
+                      <td className="py-2 px-4 border-r text-center">
+                        {result.score} / {result.totalScore}
                       </td>
-                    )}
-                    <td className="py-2 px-4 border-r">{result.lessonTitle}</td>
-                    <td className="py-2 px-4 border-r text-center">
-                      {result.score} / {result.totalScore}
-                    </td>
-                    <td className="py-2 px-4 text-center">
-                      <button
-                        onClick={() => handleOpenModal(result.testResultId)}
-                        className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-2 rounded text-sm"
-                      >
-                        Details
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                      <td className="py-2 px-4 text-center">
+                        <button
+                          onClick={() => handleOpenModal(result.testResultId)}
+                          className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-2 rounded text-sm"
+                        >
+                          Details
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* Test Word Result Modal */}
         {isModalOpen && <TestWordResultModal testResultId={selectedTestResultId} onClose={handleCloseModal} />}

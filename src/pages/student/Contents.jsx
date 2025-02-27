@@ -140,121 +140,123 @@ function Contents() {
   return (
     <StudentLayout>
       <div className="container mx-auto px-6 py-8">
-        {/* <h1 className="text-4xl font-bold text-center mb-8 text-blue-900">Lesson Contents</h1> */}
-
-        {/* Contents Section */}
+        {/* Section: Contents */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-left">แบบเรียน</h2>
-          {contents.length === 0 ? (
-            <p className="text-center text-gray-600">No contents available.</p>
-          ) : (
-            <table className="min-w-full bg-white rounded-lg shadow">
-              <thead className="bg-blue-700 text-white">
-                <tr>
-                  <th className="py-2 px-4 border-r">ชื่อ</th>
-                  <th className="py-2 px-4">คำอธิบาย</th>
-                  <th className="py-2 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contents.map((content) => (
-                  <tr key={content.id} className="hover:bg-blue-100 transition">
-                    <td className="py-2 px-4 border-r">{content.title}</td>
-                    <td className="py-2 px-4 border-r">{content.description}</td>
-                    <td className="py-2 px-4">
-                      <button
-                        onClick={() => handleOpenContentModal(content.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
-                      >
-                        Start Content
-                      </button>
-                    </td>
+          <div className="overflow-x-auto w-full max-w-4xl mx-auto">
+            {contents.length === 0 ? (
+              <p className="text-center text-gray-600">No contents available.</p>
+            ) : (
+              <table className="min-w-full bg-white rounded-lg shadow text-sm md:text-base">
+                <thead className="bg-blue-700 text-white">
+                  <tr>
+                    <th className="py-2 px-4 border-r">ชื่อ</th>
+                    <th className="py-2 px-4">คำอธิบาย</th>
+                    <th className="py-2 px-4">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </section>
-
-        {/* Exercises Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-left">แบบฝึกหัด</h2>
-          {exercises.length === 0 ? (
-            <p className="text-center text-gray-600">No exercises available.</p>
-          ) : (
-            <table className="min-w-full bg-white rounded-lg shadow">
-              <thead className="bg-blue-700 text-white">
-                <tr>
-                  <th className="py-2 px-4 border-r">ชื่อ</th>
-                  <th className="py-2 px-4">คำอธิบาย</th>
-                  <th className="py-2 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {exercises.map((ex) => (
-                  <tr key={ex.id} className="hover:bg-blue-100 transition">
-                    <td className="py-2 px-4 border-r">{ex.title}</td>
-                    <td className="py-2 px-4 border-r">{ex.description}</td>
-                    <td className="py-2 px-4">
-                      <button
-                        onClick={() => handleOpenExerciseModal(ex.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
-                      >
-                        Start Exercise
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </section>
-
-        {/* Tests Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-left">แบบทดสอบ</h2>
-          {tests.length === 0 ? (
-            <p className="text-center text-gray-600">No tests available.</p>
-          ) : (
-            <table className="min-w-full bg-white rounded-lg shadow">
-              <thead className="bg-blue-700 text-white">
-                <tr>
-                  <th className="py-2 px-4 border-r">ชื่อ</th>
-                  <th className="py-2 px-4 border-r">คำอธิบาย</th>
-                  <th className="py-2 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tests.map((test) => (
-                  <tr key={test.id} className="hover:bg-blue-100 transition">
-                    <td className="py-2 px-4 border-r">{test.title}</td>
-                    <td className="py-2 px-4 border-r">{test.description}</td>
-                    <td className="py-2 px-4">
-                      {testResults[test.id] ? (
+                </thead>
+                <tbody>
+                  {contents.map((content) => (
+                    <tr key={content.id} className="hover:bg-blue-100 transition">
+                      <td className="py-2 px-4 border-r">{content.title}</td>
+                      <td className="py-2 px-4 border-r">{content.description}</td>
+                      <td className="py-2 px-4">
                         <button
-                          disabled
-                          className="bg-gray-400 text-white py-1 px-3 rounded transition cursor-not-allowed"
-                        >
-                          {testResults[test.id].score} / {testResults[test.id].totalScore}
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleOpenTestModal(test.id)}
+                          onClick={() => handleOpenContentModal(content.id)}
                           className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
                         >
-                          Start Test
+                          เริ่มเรียน
                         </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </section>
-
-        
-
+  
+        {/* Section: Exercises */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-left">แบบฝึกหัด</h2>
+          <div className="overflow-x-auto w-full max-w-4xl mx-auto">
+            {exercises.length === 0 ? (
+              <p className="text-center text-gray-600">No exercises available.</p>
+            ) : (
+              <table className="min-w-full bg-white rounded-lg shadow text-sm md:text-base">
+                <thead className="bg-blue-700 text-white">
+                  <tr>
+                    <th className="py-2 px-4 border-r">ชื่อ</th>
+                    <th className="py-2 px-4">คำอธิบาย</th>
+                    <th className="py-2 px-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exercises.map((ex) => (
+                    <tr key={ex.id} className="hover:bg-blue-100 transition">
+                      <td className="py-2 px-4 border-r">{ex.title}</td>
+                      <td className="py-2 px-4 border-r">{ex.description}</td>
+                      <td className="py-2 px-4">
+                        <button
+                          onClick={() => handleOpenExerciseModal(ex.id)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
+                        >
+                          เริ่มฝึกหัด
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+  
+        {/* Section: Tests */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-left">แบบทดสอบ</h2>
+          <div className="overflow-x-auto w-full max-w-4xl mx-auto">
+            {tests.length === 0 ? (
+              <p className="text-center text-gray-600">No tests available.</p>
+            ) : (
+              <table className="min-w-full bg-white rounded-lg shadow text-sm md:text-base">
+                <thead className="bg-blue-700 text-white">
+                  <tr>
+                    <th className="py-2 px-4 border-r">ชื่อ</th>
+                    <th className="py-2 px-4 border-r">คำอธิบาย</th>
+                    <th className="py-2 px-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tests.map((test) => (
+                    <tr key={test.id} className="hover:bg-blue-100 transition">
+                      <td className="py-2 px-4 border-r">{test.title}</td>
+                      <td className="py-2 px-4 border-r">{test.description}</td>
+                      <td className="py-2 px-4">
+                        {testResults[test.id] ? (
+                          <button
+                            disabled
+                            className="bg-gray-400 text-white py-1 px-3 rounded transition cursor-not-allowed"
+                          >
+                            {testResults[test.id].score} / {testResults[test.id].totalScore}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleOpenTestModal(test.id)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded transition"
+                          >
+                            เริ่มทดสอบ
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+  
         {/* Modals */}
         {isContentModalOpen && <ContentModal contentId={selectedContentId} onClose={handleCloseContentModal} />}
         {isExerciseModalOpen && <ExerciseModal exerciseId={selectedExerciseId} onClose={handleCloseExerciseModal} />}
@@ -262,6 +264,7 @@ function Contents() {
       </div>
     </StudentLayout>
   );
+  
 }
 
 export default Contents;
