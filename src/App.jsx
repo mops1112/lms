@@ -44,6 +44,7 @@ function App() {
         {/* <Route path="/student/courses/:courseId/lessons/:lessonId/tests" element={<StudentTests />} /> */}
         <Route path="/logout" element={<Logout />} />
       </Routes>
+      
     </Router>
   );
 }
