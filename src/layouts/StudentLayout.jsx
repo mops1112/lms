@@ -83,7 +83,7 @@ const StudentLayout = ({ children }) => {
             <ul>
               <li className="mb-4">
                 <Link
-                  to="/teacher/courses"
+                  to="/student/courses"
                   className="block px-4 py-2 rounded bg-blue-700 transition-colors duration-200"
                 >
                   หน้าหลัก

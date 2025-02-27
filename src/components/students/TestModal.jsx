@@ -8,6 +8,7 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
   const [results, setResults] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
+  const [isStarting, setIsStarting] = useState(true); // เพิ่ม state สำหรับ delay
   const recognitionRef = useRef(null);
 
   useEffect(() => {
@@ -21,6 +22,11 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
         const data = await response.json();
         setWords(data.map((item) => ({ wordText: item.wordText, testWordId: item.id })));
         setTest({ title: `Test ${testId}` });
+
+        // เริ่ม delay 2 วินาทีก่อนเริ่มจับเสียง
+        setTimeout(() => {
+          setIsStarting(false);
+        }, 2000);
       } catch (err) {
         console.error(err);
         setError('Error fetching test words');
@@ -33,7 +39,7 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
   }, [testId]);
 
   useEffect(() => {
-    if (words.length === 0 || currentIndex >= words.length) return;
+    if (isStarting || words.length === 0 || currentIndex >= words.length) return; // รอให้ delay เสร็จก่อน
 
     const wordObj = words[currentIndex];
 
@@ -59,7 +65,6 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
       }));
 
       if (currentIndex + 1 >= words.length) {
-        // เรียก postTestResult() เมื่อคำสุดท้ายเสร็จสิ้น
         postTestResult({
           ...results,
           [wordObj.testWordId]: { answer: transcript, isCorrect },
@@ -77,7 +82,6 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
       }));
 
       if (currentIndex + 1 >= words.length) {
-        // เรียก postTestResult() เมื่อคำสุดท้ายเสร็จสิ้น
         postTestResult({
           ...results,
           [wordObj.testWordId]: { answer: '', isCorrect: false },
@@ -89,10 +93,10 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
 
     recognitionRef.current = recognition;
     recognition.start();
-  }, [currentIndex, words]);
+  }, [currentIndex, words, isStarting]);
 
   const postTestResult = async (finalResults) => {
-    if (scoreSubmitted) return; // ป้องกันการส่งซ้ำ
+    if (scoreSubmitted) return;
     setScoreSubmitted(true);
 
     const total = words.length;
@@ -153,16 +157,15 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-3xl p-6 relative">
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition duration-200"
         >
           &times;
         </button>
-  
+
         <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center">แบบทดสอบ</h1>
-  
+
         <div className="mb-6">
           <p className="mb-4 text-center">ให้อ่านคำตามไฮไลท์</p>
           <div className="flex flex-wrap gap-2 justify-center">
@@ -184,7 +187,7 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
             ))}
           </div>
         </div>
-  
+
         {Object.keys(results).length >= words.length && (
           <div className="mt-4 border-t pt-4 text-center">
             <p className="text-xl font-bold">สรุปคะแนน</p>
@@ -193,7 +196,7 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
             </p>
           </div>
         )}
-  
+
         <div className="flex justify-center mt-6">
           <button
             onClick={onClose}
@@ -205,7 +208,6 @@ const TestModal = ({ courseId, lessonId, testId, onClose }) => {
       </div>
     </div>
   );
-  
 };
 
 export default TestModal;
